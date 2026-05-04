@@ -1,6 +1,6 @@
 import { client } from "@/utils/sanityClient";
 import ProductPageTemplate from "@/app/components/ProductPageTemplate";
-import { urlFor } from "@/utils/sanityClient";
+import { PRODUCT_VARIANTS } from "@/utils/constants";
 
 export const revalidate = 60;
 
@@ -15,12 +15,7 @@ export default async function TenByTwentyPage() {
     }
   `);
 
-  const variants = products.map((p: any) => ({
-    name: p.title,
-    price: `$${p.price}`,
-    features: p.features || [],
-    image: p.images?.[0] ? urlFor(p.images[0]).url() : undefined
-  }));
+  const variants = PRODUCT_VARIANTS["10x20"];
 
   const mainProduct = products.find((p: any) => p.title.toLowerCase().includes('event tent')) || products[0];
 

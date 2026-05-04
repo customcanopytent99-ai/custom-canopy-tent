@@ -2,6 +2,7 @@
 
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { Shield, Palette, Timer } from "lucide-react";
 
 export default function HomePage() {
@@ -44,12 +45,13 @@ export default function HomePage() {
             </div>
           </div>
           <div className="rounded-2xl overflow-hidden h-[600px] relative">
-            {/* Using standard placeholder styled div since we don't have the exact image */}
-            <div className="w-full h-full bg-gradient-to-br from-brand-gray-mid to-[#CBD5E1] flex items-center justify-center">
-              <div className="text-brand-text-muted text-2xl font-bold">
-                Hero Image Placeholder
-              </div>
-            </div>
+            <Image
+              src="/assets/banner.webp"
+              alt="Custom Canopy Tent Hero"
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
         </div>
       </section>
@@ -69,17 +71,17 @@ export default function HomePage() {
             {
               tag: "Event Tent Pro",
               desc: "The industry standard for outdoor promotions.",
-              bg: "bg-brand-gray-mid",
+              image: "/assets/proTen.png",
             },
             {
               tag: "Full Wall Kit",
               desc: "Complete enclosure for backdrop visibility.",
-              bg: "bg-[#CBD5E1]",
+              image: "/assets/fullTen.png",
             },
             {
               tag: "Half Wall Pack",
               desc: "Maintain ventilation while increasing brand surface.",
-              bg: "bg-[#94A3B8]",
+              image: "/assets/halfTen.png",
             },
           ].map((item, i) => (
             <div
@@ -87,11 +89,14 @@ export default function HomePage() {
               className="bg-[#F1F4F6] rounded-xl overflow-hidden group"
             >
               <div
-                className={`h-[300px] ${item.bg} flex items-center justify-center transition-transform duration-500 group-hover:scale-105`}
+                className={`h-[300px] relative bg-brand-gray-mid flex items-center justify-center transition-transform duration-500 group-hover:scale-105`}
               >
-                <span className="text-brand-gray-light font-bold">
-                  Image Placeholder
-                </span>
+                <Image
+                  src={item.image}
+                  alt={item.tag}
+                  fill
+                  className="object-contain p-4"
+                />
               </div>
               <div className="p-8 relative z-10 bg-[#F1F4F6]">
                 <h3 className="text-xl font-semibold text-brand-charcoal mb-2">
@@ -132,8 +137,22 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-end justify-between">
               <div className="flex gap-2">
-                <div className="w-20 h-20 bg-[#CBD5E1] rounded-lg" />
-                <div className="w-20 h-20 bg-[#94A3B8] rounded-lg" />
+                <div className="w-20 h-20 relative bg-[#CBD5E1] rounded-lg overflow-hidden">
+                  <Image
+                    src="/assets/proFifteen.png"
+                    alt="10x15 Pro"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <div className="w-20 h-20 relative bg-[#94A3B8] rounded-lg overflow-hidden">
+                  <Image
+                    src="/assets/fullFifteen.png"
+                    alt="10x15 Full"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
               </div>
               <Link
                 href="/products/10x15"
@@ -154,8 +173,22 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-end justify-between">
               <div className="flex gap-2">
-                <div className="w-20 h-20 bg-[#CBD5E1] rounded-lg" />
-                <div className="w-20 h-20 bg-[#94A3B8] rounded-lg" />
+                <div className="w-20 h-20 relative bg-[#CBD5E1] rounded-lg overflow-hidden">
+                  <Image
+                    src="/assets/proTwenty.png"
+                    alt="10x20 Pro"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <div className="w-20 h-20 relative bg-[#94A3B8] rounded-lg overflow-hidden">
+                  <Image
+                    src="/assets/fullTwenty.png"
+                    alt="10x20 Full"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
               </div>
               <Link
                 href="/products/10x20"
@@ -176,9 +209,12 @@ export default function HomePage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left Large Card */}
           <div className="relative rounded-xl border border-brand-gray-mid overflow-hidden bg-brand-charcoal min-h-[400px] flex flex-col justify-end p-8 sm:p-12 shadow-sm">
-            <div className="absolute inset-0 bg-[#4a2e1d] opacity-100"></div>
-            {/* Soft dark corner radials to match the gradient look without using an image */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-[#8A3B0D]/30 to-black/20 mix-blend-multiply"></div>
+            <Image
+              src="/assets/premiumAluminium.png"
+              alt="Premium Aluminum Frames"
+              fill
+              className="object-cover"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
             <div className="relative z-10">
               <h3 className="text-[20px] text-white font-medium mb-4 tracking-normal">
@@ -251,7 +287,14 @@ export default function HomePage() {
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="flex flex-col sm:flex-row bg-white rounded-xl border border-brand-gray-mid overflow-hidden">
-            <div className="basis-[200px] bg-[#F1F5F9] shrink-0 min-h-[200px]"></div>
+            <div className="basis-[200px] bg-[#F1F5F9] shrink-0 min-h-[200px] relative">
+              <Image
+                src="/assets/flagKit.png"
+                alt="Tent Flag Kit"
+                fill
+                className="object-contain p-4"
+              />
+            </div>
             <div className="p-8">
               <h3 className="text-xl font-semibold text-brand-charcoal mb-4">
                 Tent Flag Kit
@@ -268,7 +311,14 @@ export default function HomePage() {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row bg-white rounded-xl border border-brand-gray-mid overflow-hidden">
-            <div className="basis-[200px] bg-[#F1F5F9] shrink-0 min-h-[200px]"></div>
+            <div className="basis-[200px] bg-[#F1F5F9] shrink-0 min-h-[200px] relative">
+              <Image
+                src="/assets/tentHardware.png"
+                alt="Tent Hardware"
+                fill
+                className="object-contain p-4"
+              />
+            </div>
             <div className="p-8">
               <h3 className="text-xl font-semibold text-brand-charcoal mb-4">
                 Tent Hardware
@@ -358,16 +408,14 @@ export default function HomePage() {
               <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_#8A3B0D_1.5px,_transparent_1.5px)] bg-[size:24px_24px]"></div>
 
               {/* Image Placeholder Card */}
-              <div className="relative z-10 bg-white p-4 rounded-2xl shadow-xl w-full max-w-[320px] transform rotate-3 hover:rotate-0 transition-transform duration-500 border border-white/50">
+              <div className="relative z-10 bg-white p-4 rounded-2xl shadow-xl w-full max-w-[380px] transform rotate-3 hover:rotate-0 transition-transform duration-500 border border-white/50">
                 <div className="aspect-[4/3] bg-gradient-to-br from-brand-gray-mid to-[#CBD5E1] rounded-xl w-full flex flex-col items-center justify-center mb-4 overflow-hidden border border-brand-gray-mid relative">
-                  <span className="text-4xl mb-3 z-10">🏔️</span>
-                  <span className="text-brand-charcoal font-bold text-center px-4 z-10 text-sm">
-                    Canadian Landscape
-                    <br />
-                    <span className="text-xs font-normal opacity-70">
-                      (Placeholder Image)
-                    </span>
-                  </span>
+                  <Image
+                    src="/assets/whyBuyBanner.jpg"
+                    alt="Why Buy Custom Canopy"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <div className="h-3 bg-brand-gray-light rounded w-3/4 mb-2"></div>
                 <div className="h-3 bg-brand-gray-light rounded w-1/2"></div>

@@ -1,14 +1,7 @@
 'use server'
 
-import { createClient } from 'next-sanity'
-
-const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-  apiVersion: '2024-04-17',
-  useCdn: false,
-  token: process.env.SANITY_API_TOKEN, // Requires a token with write access
-})
+import { writeClient } from '@/sanity/lib/client'
+import { sendLeadEmail } from '@/utils/email'
 
 export async function submitLead(formData: any) {
   try {
@@ -25,10 +18,18 @@ export async function submitLead(formData: any) {
       status: 'new',
     }
 
-    const result = await client.create(doc)
+    const result = await writeClient.create(doc)
+    
+    // Send email notification to admin (non-blocking)
+    try {
+      await sendLeadEmail(formData)
+    } catch (emailError) {
+      console.error('Email sending failed but lead was created:', emailError)
+    }
+
     return { success: true, id: result._id }
-  } catch (error) {
+  } catch (error: any) {
     console.error('Submission error:', error)
-    return { success: false, error: 'Failed to submit' }
+    return { success: false, error: error.message || 'Failed to submit' }
   }
 }

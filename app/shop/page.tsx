@@ -3,6 +3,7 @@ import { urlFor } from "@/utils/sanityClient";
 import Link from 'next/link';
 import Image from 'next/image';
 import Banner from '../components/Banner';
+import { PRODUCT_VARIANTS } from "@/utils/constants";
 
 export const revalidate = 60;
 
@@ -23,6 +24,30 @@ export default async function ShopAllPage() {
     }
   `);
 
+  // Enrich categories with hardcoded variants
+  const enrichedCategories = categories.map((cat: any) => {
+    const sizeKey = cat.slug.replace('-tents', '') as keyof typeof PRODUCT_VARIANTS;
+    const hardcoded = PRODUCT_VARIANTS[sizeKey] || [];
+    
+    const mappedHardcoded = hardcoded.map(h => ({
+      title: h.name,
+      slug: h.name.toLowerCase().replace(/\s+/g, '-'),
+      price: parseInt(h.price.replace('$', '').replace(',', '')),
+      priceText: 'Starting at',
+      tag: h.name.includes('Pro') ? 'Premium' : '',
+      images: [], // We'll use h.image directly
+      features: h.features,
+      localImage: h.image,
+      isHardcoded: true
+    }));
+
+    // Filter out duplicates (if Sanity already has them, but for now we prioritize constants to ensure exact names)
+    return {
+      ...cat,
+      products: [...mappedHardcoded]
+    };
+  });
+
   return (
     <div className="bg-[#F8FAFC] min-h-screen font-sans">
       <Banner 
@@ -32,7 +57,7 @@ export default async function ShopAllPage() {
         subtitle="Professional-grade custom event tents and accessories engineered for resilience."
       />
 
-      {categories.map((category: any, sectionIndex: number) => (
+      {enrichedCategories.map((category: any, sectionIndex: number) => (
         <section 
           key={category.slug} 
           id={category.slug}
@@ -52,7 +77,7 @@ export default async function ShopAllPage() {
             {category.products?.map((prod: any) => (
               <Link 
                 key={prod.slug} 
-                href={`/product/${prod.slug}`}
+                href={prod.isHardcoded ? `/products/${category.slug.replace('-tents', '')}` : `/product/${prod.slug}`}
                 className="group bg-white rounded-[2.5rem] overflow-hidden flex flex-col relative border border-brand-gray-mid hover:border-brand-orange hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-500 transform hover:-translate-y-2"
               >
                 {prod.tag && (
@@ -62,9 +87,9 @@ export default async function ShopAllPage() {
                 )}
                 
                 <div className="bg-brand-gray-light aspect-[4/5] relative overflow-hidden">
-                  {prod.images?.[0] ? (
+                  {prod.localImage || prod.images?.[0] ? (
                     <Image 
-                      src={urlFor(prod.images[0]).url()} 
+                      src={prod.localImage || urlFor(prod.images[0]).url()} 
                       alt={prod.title} 
                       fill
                       className="object-contain p-12 transition-transform duration-700 group-hover:scale-110" 

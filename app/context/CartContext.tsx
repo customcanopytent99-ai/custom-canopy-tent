@@ -9,6 +9,7 @@ interface CartItem {
   image: string;
   quantity: number;
   size?: string;
+  assets?: string[]; // Array of base64 strings or URLs for uploaded images
 }
 
 interface CartContextType {

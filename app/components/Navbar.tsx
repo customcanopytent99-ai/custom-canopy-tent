@@ -56,7 +56,7 @@ export default function Navbar() {
 
         {/* Right side */}
         <div className="flex items-center gap-6">
-          <Link href="/cart" className="relative bg-transparent border-none cursor-pointer text-brand-text-muted p-2 rounded-full hover:bg-brand-gray-mid transition-colors flex items-center justify-center no-underline">
+          <Link href="/checkout" className="relative bg-transparent border-none cursor-pointer text-brand-text-muted p-2 rounded-full hover:bg-brand-gray-mid transition-colors flex items-center justify-center no-underline">
             <svg
               width="24"
               height="24"
@@ -122,7 +122,7 @@ export default function Navbar() {
               </Link>
             ))}
             <Link
-              href="/cart"
+              href="/checkout"
               onClick={() => setMobileOpen(false)}
               className="block py-3 text-base font-medium text-brand-text-dark no-underline border-b border-brand-gray-mid hover:text-brand-orange transition-colors"
             >

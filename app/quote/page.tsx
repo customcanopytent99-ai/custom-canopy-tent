@@ -1,14 +1,28 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Banner from '../components/Banner';
 import { submitLead } from '../actions/leads';
 
 export default function QuotePage() {
+  const searchParams = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     name: '', email: '', phone: '', company: '', tentSize: '', quantity: '', useCase: '', message: '',
   });
+
+  useEffect(() => {
+    const product = searchParams.get('product');
+    const size = searchParams.get('size');
+    if (product || size) {
+      setForm(f => ({
+        ...f,
+        tentSize: size || f.tentSize,
+        message: product ? `I am interested in the ${product}.` : f.message
+      }));
+    }
+  }, [searchParams]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setForm(f => ({ ...f, [e.target.name]: e.target.value }));
