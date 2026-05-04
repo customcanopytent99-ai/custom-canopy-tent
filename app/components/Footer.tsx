@@ -54,6 +54,25 @@ export default function Footer() {
               </Link>
             ))}
           </div>
+
+          {/* Contact */}
+          <div className="flex flex-col gap-4">
+            <h4 className="text-brand-charcoal text-base font-semibold mb-2">
+              Contact Us
+            </h4>
+            <a
+              href="mailto:orders@customtentcanopy.ca"
+              className="text-brand-text-muted text-base no-underline hover:text-brand-charcoal transition-colors"
+            >
+              orders@customtentcanopy.ca
+            </a>
+            <a
+              href="tel:+17788193202"
+              className="text-brand-text-muted text-base no-underline hover:text-brand-charcoal transition-colors"
+            >
+              +1-778-819-3202
+            </a>
+          </div>
         </div>
       </div>
 
