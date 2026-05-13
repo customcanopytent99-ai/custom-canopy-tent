@@ -1,10 +1,10 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Banner from '../components/Banner';
 import { submitLead } from '../actions/leads';
 
-export default function QuotePage() {
+function QuoteForm() {
   const searchParams = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -172,5 +172,17 @@ export default function QuotePage() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function QuotePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-orange"></div>
+      </div>
+    }>
+      <QuoteForm />
+    </Suspense>
   );
 }
